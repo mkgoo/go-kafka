@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/Shopify/sarama"
 )
 
@@ -9,16 +10,16 @@ import (
 
 func main() {
 	config := sarama.NewConfig()
-	config.Producer.RequiredAcks = sarama.WaitForAll 	// 发送完数据需要leader和follow都确认
-	config.Producer.Partitioner = sarama.NewRandomPartitioner 	// 新选出一个partition
+	config.Producer.RequiredAcks = sarama.WaitForAll          // 发送完数据需要leader和follow都确认
+	config.Producer.Partitioner = sarama.NewRandomPartitioner // 新选出一个partition
 	config.Producer.Return.Successes = true
 
 	// 构造一个消息
 	msg := &sarama.ProducerMessage{}
-	msg.Topic = "web_log"
+	msg.Topic = "go_log"
 	msg.Value = sarama.StringEncoder("this is a normal log")
 	// 链接kafka
-	client, err := sarama.NewSyncProducer([]string{"192.168.2.103:9092"}, config)
+	client, err := sarama.NewSyncProducer([]string{"192.168.2.136:9092"}, config)
 	if err != nil {
 		fmt.Println("producer closed, err:", err)
 		return
